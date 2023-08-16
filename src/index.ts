@@ -72,3 +72,41 @@ function addToHello(name: string):string {
 }
 
 console.log(addToHello("Luan"));
+
+//funções multi tipos
+
+function callToPhone( phone: number | string): number | string{
+    return phone;
+}
+
+console.log(callToPhone(111111111));
+
+// funções async
+
+async function getDatabase(id: number): Promise<string>{
+    return "Luan";
+}
+
+// interfaces (type x interface) - é um contrato que deve ser implementado pelas variaveis que a recebem.
+
+type robot = {
+    id: number;
+    name: string;
+};
+
+interface robot2 {
+    readonly id: number;
+    name: string;
+};
+
+const bot: robot = {
+    id:1,
+    name: "megaman",
+};
+
+const bot2: robot2 = {
+    id:1,
+    name: "megaman",
+};
+
+console.log(bot, bot2);
