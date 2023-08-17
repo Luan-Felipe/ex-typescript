@@ -90,13 +90,14 @@ async function getDatabase(id: number): Promise<string>{
 // interfaces (type x interface) - é um contrato que deve ser implementado pelas variaveis que a recebem.
 
 type robot = {
-    id: number;
+    readonly id: number;
     name: string;
 };
 
 interface robot2 {
-    readonly id: number;
-    name: string;
+    readonly id: string | number;
+    name: string | number;
+    sayhello(): string;
 };
 
 const bot: robot = {
@@ -104,9 +105,132 @@ const bot: robot = {
     name: "megaman",
 };
 
+// Classes
+
 const bot2: robot2 = {
-    id:1,
+    id: 1,
     name: "megaman",
+    sayhello: function (): string {
+        return "Hello !"
+    }
 };
 
 console.log(bot, bot2);
+
+class Pessoa implements robot2{
+    id: string | number;
+    name: string;
+
+    constructor(id: string | number, name: string){
+        this.id = id;
+        this.name = name;
+    }
+    sayhello(): string {
+        return `Hello I'm ${this.name}`;
+    }
+}
+
+const p = new Pessoa( 1, "Luan");
+console.log(p);
+p.sayhello;
+console.log(p.sayhello());
+
+
+class Personagem {
+    nome: string;
+    forca: number;
+    skill: number;
+
+    constructor (nome: string, forca: number, skill: number){
+        this.nome = nome;
+        this.forca = forca;
+        this.skill = skill;
+    }
+
+    attack(): void {
+        console.log(` Atacando com ${this.forca} pontos de forca`);
+    }
+}
+
+const p1 = new Personagem("Goku", 98, 70);
+p1.attack();
+
+/*
+ Data Modifiers
+ 
+    private = só é possivel acessar a propriedade por dentro da classe(metodo construtor).
+    public = é possivel acessar uma propriedade por fora da classe.
+    protected = só pode ser acessado pela própria classe e suas sub classes.
+
+    também é possivel usar data modifiers em metodos 
+
+    ? quando não é obrigatório
+    readonly = quando a propriedade é somente de leitura.
+ */
+
+    
+/* sub classes, classes que herdam de outras classes.
+    sub class = Mago.
+    super class = Personagem.
+*/
+class Mago extends Personagem {
+    pontosMagicos: number;
+    constructor(nome: string, forca: number, skill: number, pontosMagicos: number){
+        super(nome, forca, skill)
+        this.pontosMagicos = pontosMagicos;
+    }
+}
+
+const p2 = new Mago ("Luan", 8001, 8001, 8001);
+console.log(p2);
+
+/*
+    generics - aceita um representacao generica de tipo <T>
+o que faz com que no momento de instanciar posssamos passar uma tipagem.
+*/
+function concatArray<T>(...items: T[]): T[]{
+    return new Array().concat(...items);
+}
+
+const numArray = concatArray<number[]>([1, 5], [3]);
+const stgArray = concatArray<string[]>(["Luan", "Goku"], ["Vegeta"]);
+console.log(numArray);
+console.log(stgArray);
+
+let dado: string = "Oi";
+console.log(dado);
+
+/*
+decorators - quando queremos adicionar um comando extra a estrutura de
+código - lembrar de algo (decorar) para disparar um comportamento
+quando acionado um evento.
+
+só exibe  quem chamou porque foi programado para isso em 
+ExibirNome.
+*/
+function ExibirNome(target: any){
+    console.log(target);
+}
+
+@ExibirNome
+class Funcionario {}
+
+@ExibirNome
+class Quincas {}
+
+function apiVersion(version: string){
+    return (target: any) => {
+        Object.assign(target.prototype, {__version: version})
+    }
+}
+
+@apiVersion("1.10")
+class Api{}
+
+const api = new Api();
+console.log(api.__version);
+
+
+
+
+

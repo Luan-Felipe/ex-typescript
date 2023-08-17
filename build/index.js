@@ -62,5 +62,48 @@ const bot = {
 const bot2 = {
     id: 1,
     name: "megaman",
+    sayhello: function () {
+        return "Hello !";
+    }
 };
 console.log(bot, bot2);
+class Pessoa {
+    constructor(id, name) {
+        this.id = id;
+        this.name = name;
+    }
+    sayhello() {
+        return `Hello I'm ${this.name}`;
+    }
+}
+const p = new Pessoa(1, "Luan");
+console.log(p);
+p.sayhello;
+console.log(p.sayhello());
+class Personagem {
+    constructor(nome, forca, skill) {
+        this.nome = nome;
+        this.forca = forca;
+        this.skill = skill;
+    }
+    attack() {
+        console.log(` Atacando com ${this.forca} pontos de forca`);
+    }
+}
+const p1 = new Personagem("Goku", 98, 70);
+p1.attack();
+class Mago extends Personagem {
+    constructor(nome, forca, skill, pontosMagicos) {
+        super(nome, forca, skill);
+        this.pontosMagicos = pontosMagicos;
+    }
+}
+const p2 = new Mago("Luan", 8001, 8001, 8001);
+console.log(p2);
+function concatArray(...items) {
+    return new Array().concat(...items);
+}
+const numArray = concatArray([1, 5], [3]);
+const stgArray = concatArray(["Luan", "Goku"], ["Vegeta"]);
+console.log(numArray);
+console.log(stgArray);
